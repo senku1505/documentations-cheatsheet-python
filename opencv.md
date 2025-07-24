@@ -1,7 +1,7 @@
 
-# 🧠 OpenCV Python Tutorial
+# senku open cv docs
 
-A beginner-friendly tutorial for learning image and video processing using OpenCV in Python. This guide covers essential topics including capturing video, edge detection, shape detection, face detection, and more.
+basics n more.
 
 ---
 
