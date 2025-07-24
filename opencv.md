@@ -124,11 +124,17 @@ cv2.waitKey(0)
 works similar to how lightroom handles "auto angle thingy"
 
 ```python
+
+# This script loads an image ("cards.jpg"), selects four source points on a skewed card in the image,
+# and defines a rectangular destination area to map these points to. It then calculates the perspective
+# transformation matrix using these point sets and applies a warp to obtain a top-down view (bird’s eye)
+# of the selected card region, effectively rectifying its perspective. Finally, it displays both the 
+# original image and the perspective-corrected (warped) output.
+
 img = cv2.imread("cards.jpg")
 
 # Define source points from the original image
 pts1 = np.float32([[111, 219], [287, 188], [154, 482], [352, 440]])
-
 # Define destination points to map to
 pts2 = np.float32([[0, 0], [300, 0], [0, 400], [300, 400]])
 
