@@ -3,8 +3,8 @@ documentations, cheatsheets, resources etc to study python n more
 
 current stuff-
 
-pybasics.ipynb - contains basic python stuff
-opencv.md - most of what you will need to study opencv (more features to be added)
+1. pybasics.ipynb - contains basic python stuff
+2. opencv.md - most of what you will need to study opencv (more features to be added)
 
 ---
 
