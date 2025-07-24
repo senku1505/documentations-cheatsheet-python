@@ -48,7 +48,7 @@ imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 # CHANNEL IS BASICALLY NUMBER OF NUMBER OF COLOR COMPONENTS PER PIXEL
 
 # theory regarding canny filter
-# threshold1 (lower threshold):
+# threshold1 (lower threshold): s
 # Edge pixels with a gradient higher than this are considered as strong edges.
 # threshold2 (upper threshold):
 # Edge pixels with a gradient between threshold1 and threshold2 are considered as weak edges and are included only if they are connected to strong edges.
