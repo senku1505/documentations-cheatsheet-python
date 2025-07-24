@@ -1,7 +1,7 @@
 
-# senku open cv docs
+# senku open cv notes
 
-basics n more.
+basics n more stuff
 
 ---
 
@@ -48,7 +48,7 @@ imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 # CHANNEL IS BASICALLY NUMBER OF NUMBER OF COLOR COMPONENTS PER PIXEL
 
 # theory regarding canny filter
-# threshold1 (lower threshold): s
+# threshold1 (lower threshold):
 # Edge pixels with a gradient higher than this are considered as strong edges.
 # threshold2 (upper threshold):
 # Edge pixels with a gradient between threshold1 and threshold2 are considered as weak edges and are included only if they are connected to strong edges.
@@ -97,7 +97,7 @@ cv2.waitKey(0)
 
 ---
 
-## 🧱 Create Shapes and Text on Image
+## create shapes and text on image
 
 ```python
 
@@ -120,7 +120,8 @@ cv2.waitKey(0)
 ```
 
 ---
-## Warp Perspective
+## warp perspective (warp a single card to output result) 
+works similar to how lightroom handles "auto angle thingy"
 
 ```python
 img = cv2.imread("cards.jpg")
@@ -207,20 +208,39 @@ while True:
 ## contour and shape detc
 ```python
 def getContours(img):
+    # Find external contours in the image
+    # cv2.RETR_EXTERNAL: retrieves only the outermost contours
+    # cv2.CHAIN_APPROX_SIMPLE: compresses contour points to save memory
     contours, _ = cv2.findContours(img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     for cnt in contours:
+
+                # Calculate the area enclosed by the contour
+                # Filter out very small areas (likely noise)
+                # Calculate the perimeter (arc length) of the contour
+                
+
+
         area = cv2.contourArea(cnt)
         if area > 500:
             peri = cv2.arcLength(cnt, True)
+
+            # Approximate the contour to a polygon with fewer vertices
+                # The smaller the epsilon value, the closer the approximation
+
             approx = cv2.approxPolyDP(cnt, 0.02 * peri, True)
+
+            # Count the number of corner points (vertices) 
+            # and get the bounding rectangle cordinates
+
             objCor = len(approx)
             x, y, w, h = cv2.boundingRect(approx)
 
             if objCor == 3: objectType = "Triangle"
-            elif objCor == 4: objectType = "Rectangle"
+            elif objCor == 4: objectType = "Rectangle/Sq"
             elif objCor > 4: objectType = "Circle"
             else: objectType = "None"
 
+            # Draw the contour outline on the image and label the detected shape name near its top-left corner
             cv2.drawContours(imgContour, [approx], -1, (0, 255, 0), 3)
             cv2.putText(imgContour, objectType, (x + 10, y + 30),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 0, 0), 2)
@@ -242,6 +262,8 @@ cv2.waitKey(0)
 ## face detec (HAAR CASCADE SOLO)
 
 ```python
+# Haar cascades are pre-trained classifiers that detect specific patterns like faces, eyes, etc.
+# This loads the XML file that contains the trained face detector model
 faceCascade = cv2.CascadeClassifier(cv2.data.haarcascades + "haarcascade_frontalface_default.xml")
 
 img = cv2.imread("face.jpg")
@@ -283,3 +305,34 @@ pip install opencv-python numpy
 ## links
 [OpenCV Docs](https://docs.opencv.org/).
 [G2G Cheat Sheet](https://www.geeksforgeeks.org/python/python-opencv-cheat-sheet/).
+[TutPoint (shortnotes)](https://www.tutorialspoint.com/opencv/python_opencv_cheatsheet.htm).
+https://www.computervision.zone/
+
+--- 
+
+## things to add/study
+Image Thresholding (Binary, Adaptive, Otsu)
+Useful for segmentation before contour detection.
+cv2.threshold(), cv2.adaptiveThreshold
+
+Bitwise Operations (cv2.bitwise_and/or/xor/not)
+Helpful for masking and logical operations.
+
+Morphological Transformations
+cv2.morphologyEx() with cv2.MORPH_OPEN, CLOSE, GRADIENT
+More advanced than simple dilate/erode.
+
+Object Tracking (Basics)
+Tracking colored objects using HSV masks + contours.
+
+Image Histogram & Equalization (cv2.calcHist(), cv2.equalizeHist())
+Useful in contrast enhancement and lighting correction.
+
+Template Matching
+cv2.matchTemplate() – for finding sub-image patterns.
+
+Background Subtraction (for video) (VERY TOUGH SHIT)
+cv2.createBackgroundSubtractorMOG2()
+Drawing Bounding Boxes with Labels (YOLO-style look)
+
+--- 
